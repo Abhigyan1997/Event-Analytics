@@ -1,0 +1,63 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Event Analytics API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000"
+    }
+  ],
+  "paths": {
+    "/events": {
+      "post": {
+        "summary": "Ingest events (batch)",
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      }
+    },
+    "/funnels": {
+      "post": {
+        "summary": "Compute funnel",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{id}/journey": {
+      "get": {
+        "summary": "User journey"
+      }
+    },
+    "/retention": {
+      "get": {
+        "summary": "Cohort retention"
+      }
+    },
+    "/metrics": {
+      "get": {
+        "summary": "Event metrics"
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      }
+    }
+  }
+}

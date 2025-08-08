@@ -1,0 +1,108 @@
+{
+  "info": {
+    "name": "Analytics API",
+    "_postman_id": "12345678-90ab-cdef-1234-567890abcdef",
+    "description": "Test suite for Analytics API endpoints: /events, /funnels, /users/:id/journey, /retention, /metrics",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Batch Events Ingestion",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{x_api_key}}", "type": "text" },
+          { "key": "x-org-id", "value": "{{x_org_id}}", "type": "text" },
+          { "key": "x-project-id", "value": "{{x_project_id}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/events", "host": ["{{baseUrl}}"], "path": ["events"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"orgId\": \"{{x_org_id}}\",\n  \"projectId\": \"{{x_project_id}}\",\n  \"events\": [\n    {\n      \"userId\": \"user_1\",\n      \"eventName\": \"signup\",\n      \"timestamp\": \"2025-08-07T10:00:00Z\",\n      \"properties\": { \"plan\": \"pro\" }\n    },\n    {\n      \"userId\": \"user_2\",\n      \"eventName\": \"login\",\n      \"timestamp\": \"2025-08-07T12:00:00Z\"\n    }\n  ]\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Funnels",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{x_api_key}}", "type": "text" },
+          { "key": "x-org-id", "value": "{{x_org_id}}", "type": "text" },
+          { "key": "x-project-id", "value": "{{x_project_id}}", "type": "text" },
+          { "key": "Content-Type", "value": "application/json", "type": "text" }
+        ],
+        "url": { "raw": "{{baseUrl}}/funnels", "host": ["{{baseUrl}}"], "path": ["funnels"] },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"steps\": [\"signup\", \"login\", \"purchase\"],\n  \"from\": \"2025-08-06T00:00:00Z\",\n  \"to\": \"2025-08-09T23:59:59Z\"\n}"
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Journey",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{x_api_key}}", "type": "text" },
+          { "key": "x-org-id", "value": "{{x_org_id}}", "type": "text" },
+          { "key": "x-project-id", "value": "{{x_project_id}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/users/user_1/journey?limit=50",
+          "host": ["{{baseUrl}}"],
+          "path": ["users", "user_1", "journey"],
+          "query": [{ "key": "limit", "value": "50" }]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Retention",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{x_api_key}}", "type": "text" },
+          { "key": "x-org-id", "value": "{{x_org_id}}", "type": "text" },
+          { "key": "x-project-id", "value": "{{x_project_id}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/retention?cohort=signup&days=7",
+          "host": ["{{baseUrl}}"],
+          "path": ["retention"],
+          "query": [
+            { "key": "cohort", "value": "signup" },
+            { "key": "days", "value": "7" }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Metrics",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "x-api-key", "value": "{{x_api_key}}", "type": "text" },
+          { "key": "x-org-id", "value": "{{x_org_id}}", "type": "text" },
+          { "key": "x-project-id", "value": "{{x_project_id}}", "type": "text" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/metrics?event=signup&interval=daily&from=2025-08-06T00:00:00Z&to=2025-08-09T23:59:59Z",
+          "host": ["{{baseUrl}}"],
+          "path": ["metrics"],
+          "query": [
+            { "key": "event", "value": "signup" },
+            { "key": "interval", "value": "daily" },
+            { "key": "from", "value": "2025-08-06T00:00:00Z" },
+            { "key": "to", "value": "2025-08-09T23:59:59Z" }
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
